@@ -1,6 +1,7 @@
 from colorama import Fore, Back, Style
 import os
 import time
+from functools import lru_cache
 
 
 
@@ -11,6 +12,7 @@ Keywords = ['dev', 'debug', 'developer', 'developer options', 'developer option'
 debug = False
 devOptions = False
 
+@lru_cache(maxsize=None)
 def calculate(number):
   list = []
   higher = 2
@@ -38,7 +40,7 @@ def calculate(number):
     if tempnumber == 0:
       return list
 
-
+@lru_cache(maxsize=None)
 def findhighest(number, higher):
   while higher <= number:
     if debug:
@@ -83,13 +85,13 @@ def choiceOne():
 
 
 def choiceTwo():
-  firstnum = int(input("First:"))
-  lastnum = int(input("last:"))
+  firstnum = int(input("First: "))
+  lastnum = int(input("Last: "))
   for i in range(firstnum, lastnum):
     list = calculate(i)
-    print(list)
-  input("\n\n[MAKE GRAPH]")
-  print("\n\n\n     |  1   2   4   8   16   32   64")
+    print(f"{i} | {list}")
+  input("\n\n[CONTINUE]")
+  print("\n\n\n       1   2   4   8   16   32   64   128")
   for i in range(firstnum, lastnum):
     list = calculate(i)
     print(f" {i} |", end='')
@@ -118,11 +120,14 @@ def choiceTwo():
     else:
       print(" [  ]", end='')
     if 64 in list:
-      print(" [xx]", end='\n')
+      print(" [xx]", end='')
     else:
-      print(" [  ]", end='\n')
-
-    
+      print(" [  ]", end='')
+    if 128 in list:
+      print(" [xx]", end='\r')
+    else:
+      print(" [  ]", end='\r')
+    time.sleep(0.05)
     
 
 def choiceThree():
